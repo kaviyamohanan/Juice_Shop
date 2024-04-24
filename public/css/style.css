@@ -1,0 +1,99 @@
+header h1{
+    /* text-align: center; */
+
+    color: white;
+    margin-left: 43%;
+}
+
+
+.footer{
+    text-align: center;
+    padding: 20px;
+    background-color: black;
+    color: white;
+}
+
+header img{
+    width: 156px;
+    float: left;
+    top: 0px;
+    position: relative;
+}
+
+header{
+    background-color: #F9A03F !important;
+        padding: 10px !important;
+
+}
+.form-floating>label {
+    position: relative !important;
+}
+
+.form-floating>.form-control:not(:placeholder-shown) {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+#order{
+    max-width: 638px;
+    padding: 25px;
+    border: 1px solid #F9A03F;
+    background-color: #F7D488;
+    border-radius: 8px;
+}
+.alert{
+    width: 20%;
+    right: 0px;
+    position: absolute;
+}
+.navbar{
+    background-color: #E9F7CA !important;
+}
+
+#orderSubmitButton{
+    background-color: green !important;
+}
+.container{
+    height: 800px !important;
+}
+main{
+    /* background: url(../images/backgrounds/background.jpeg); */
+    background-position: center;    
+}
+#receipt{
+    width: 660px;
+    background-color: #EAEFB1;
+    padding: 36px;
+
+}
+.order_container{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 70px 169px 70px 0;
+}
+/* #login{
+    width: 50%;
+} */
+#LoginForm{
+    background-color: #E9F7CA;
+    padding: 27px;
+    border: 2px solid #fbe7c1;
+    border-radius: 20px;
+    margin: 21px auto;
+    width: 25%;
+}
+
+#login h2{
+   text-align: center;
+}
+#view{
+    width: 90%;
+    margin: 2% auto;
+}
+h2{
+    text-align: center;
+    margin-bottom: 30px;
+}
+.masthead{
+    min-height: 800px;
+}

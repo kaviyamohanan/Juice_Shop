@@ -1,0 +1,205 @@
+<%- include('_layouts/header',{isLoggedIn:isLoggedIn, isAdmin:isAdmin}); -%>
+
+    <!-- Masthead-->
+    <main class="masthead">
+        <% if (status == "success") { %> 
+            <%- include('alerts/success', { message: message }) -%> 
+          <%} else if(status == "error") {%> 
+            <%- include('alerts/error', { message: message }) -%> 
+          <%}%>
+     <div class="container_main">
+     
+      <!-- <div class="px-4 px-lg-5 h-100"> -->
+        <% if(login == true) { %> 
+        <section class="page-section" id="login">
+                       
+                <form id="LoginForm" action="/login_submit" method="POST">
+                    <h2 class="mt-0">Login</h2>
+                <!-- Email address input-->
+                <div class="form-floating mb-3">
+                    <label for="uname">Username</label>
+                    <input class="form-control" id="uname" name="uname" type="text" placeholder="Username" data-sb-validations="required" />
+                </div>
+                    <!-- Password input-->
+            
+                <div class="form-floating mb-3">
+                    <label for="pass">Password</label>
+                    <input class="form-control" name="pass" id="pass" type="password" placeholder="Password" data-sb-validations="required" />
+                </div>
+
+                <!-- Submit Button-->
+                <div class="d-grid"><button class="btn btn-primary btn-xl" id="submitButton" type="submit">Submit</button></div>
+            </form>
+        </section>
+
+        <%} if(create_order == true){%>
+            <div class="order_container">
+            <section class="page-section" id="order">
+                <form id="orderForm" action="/order_submit" method="POST">
+                    <h2>Please order here..</h2>
+                    <!-- Name input -->
+                    <div class="mb-3">
+                        <label for="name">Name</label>
+                        <input class="form-control" id="name" name="name" type="text" placeholder="Name" data-sb-validations="required" value="<%= formData && formData.name ? formData.name : '' %>" />
+                        <% if (errors && errors.length > 0) { %>
+                            <% errors.forEach(error => { %>
+                                <% if (error.path === 'name') {%>
+                                    <p class="text-danger"><%= error.msg %></p>
+                                <% } %>
+                            <% }); %>
+                        <% } %>
+                    </div>
+                    <!-- Phone input -->
+                    <div class="mb-3">
+                        <label for="phone">Phone</label>
+                        <input class="form-control" name="phone" id="phone" type="text" placeholder="Phone" data-sb-validations="required" value="<%= formData && formData.phone ? formData.phone : '' %>"/>
+                        <% if (errors && errors.length > 0) { %>
+                            <% errors.forEach(error => { %>
+                                <% if (error.path === 'phone') {%>
+                                    <p class="text-danger"><%= error.msg %></p>
+                                <% } %>
+                            <% }); %>
+                        <% } %>
+                     </div>
+                    <!-- Mango Juice input -->
+                    <div class="mb-3">
+                        <label for="mango">Mango Juice</label>
+                        <input class="form-control" name="mango" id="mango" type="text" placeholder="Mango Juice" value="<%= formData && formData.mango ? formData.mango : '' %>"/>
+                        <% if (errors && errors.length > 0) { %>
+                            <% errors.forEach(error => { %>
+                                <% if (error.path === 'mango') {%>
+                                    <p class="text-danger"><%= error.msg %></p>
+                                <% } %>
+                            <% }); %>
+                        <% } %>
+                    </div>
+                    <!-- Berry Juice input -->
+                    <div class="mb-3">
+                        <label for="berry">Berry Juice</label>
+                        <input class="form-control" name="berry" id="berry" type="text" placeholder="Berry Juice" value="<%= formData && formData.berry ? formData.berry : '' %>"/>
+                        <% if (errors && errors.length > 0) { %>
+                            <% errors.forEach(error => { %>
+                                <% if (error.path === 'berry') {%>
+                                    <p class="text-danger"><%= error.msg %></p>
+                                <% } %>
+                            <% }); %>
+                        <% } %>
+                    </div>
+                    <!-- Apple Juice input -->
+                    <div class="mb-3">
+                        <label for="apple">Apple Juice</label>
+                        <input class="form-control" name="apple" id="apple" type="text" placeholder="Apple Juice" value="<%= formData && formData.apple ? formData.apple : '' %>"/>
+                        <% if (errors && errors.length > 0) { %>
+                            <% errors.forEach(error => { %>
+                                <% if (error.path === 'apple') {%>
+                                    <p class="text-danger"><%= error.msg %></p>
+                                <% } %>
+                            <% }); %>
+                        <% } %>
+                    </div>
+                    <!-- Submit Button -->
+                    <div class="d-grid">
+                        <button class="btn btn-primary btn-xl" id="orderSubmitButton" type="submit">Submit</button>
+                    </div>
+                </form>
+
+
+            </section>
+            <% if(view_receipt == true){%>
+
+                <section class="page-section" id="receipt">
+                <h2>Order Confirmation</h2>
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Phone</th>
+                      <th>Mango Juices</th>
+                      <th>Berry Juices</th>
+                      <th>Apple Juices</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><%= order.name %></td>
+                      <td><%= order.phone %></td>
+                      <td><%= order.mangoJuices %> x $<%= mangoPrice %></td>
+                      <td><%= order.berryJuices %> x $<%= berryPrice %></td>
+                      <td><%= order.appleJuices %> x $<%= applePrice %></td>
+                    </tr>
+                  </tbody>
+                </table>
+              
+                <h4>Order Summary</h4>
+                <table class="table table-bordered">
+                  <tbody>
+                    <tr>
+                      <td>Sub Total</td>
+                      <td>$<%= subTotal.toFixed(2) %></td>
+                    </tr>
+                    <tr>
+                      <td>Tax (13%)</td>
+                      <td>$<%= tax.toFixed(2) %></td>
+                    </tr>
+                    <tr>
+                      <td>Total Cost</td>
+                      <td>$<%= totalCost.toFixed(2) %></td>
+                    </tr>
+                  </tbody>
+                </table>
+            </section>
+            <%}%>
+        </div>
+         <%} if(view_order == true){%>
+            <section class="page-section" id="view">
+                <h2>All Orders</h2>
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Phone</th>
+                      <th>Mango Juices</th>
+                      <th>Berry Juices</th>
+                      <th>Apple Juices</th>
+                      <th>Sub Total</th>
+                      <th>Tax</th>
+                      <th>Total Cost</th>
+                      <th>Actions</th> <!-- New column for delete button -->
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% orders.forEach(orderWithSummary => { %>
+                      <tr>
+                        <td><%= orderWithSummary.order.name %></td>
+                        <td><%= orderWithSummary.order.phone %></td>
+                        <td><%= orderWithSummary.order.mangoJuices %></td>
+                        <td><%= orderWithSummary.order.berryJuices %></td>
+                        <td><%= orderWithSummary.order.appleJuices %></td>
+                        <td>$<%= orderWithSummary.subTotal.toFixed(2) %></td>
+                        <td>$<%= orderWithSummary.tax.toFixed(2) %></td>
+                        <td>$<%= orderWithSummary.totalCost.toFixed(2) %></td>
+                        <td>
+                          <form action="/delete_order/<%= orderWithSummary.order._id %>" method="POST">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                          </form>
+                        </td>
+                      </tr>
+                    <% }); %>
+                  </tbody>
+                </table>
+              </section>
+
+         <%}%>
+
+       
+
+
+
+
+
+
+            
+      <!-- </div> -->
+      </div>
+    </main>
+    <%- include('_layouts/footer'); -%>
